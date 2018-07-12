@@ -9,19 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private var lastNameTextFieldHiddenContext = 0
-    private var lastNameObservingView:UIView? = nil
-    @IBOutlet weak var lastNameLabel: UILabel!
-    @IBOutlet weak var lastNameTextField: UITextField!
+    private var textFieldHiddenContext = 0
+    private var textFieldObservingView:UIView? = nil
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var textField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // add the observer
-        lastNameTextField.addObserver(
+        textField.addObserver(
             self,
             forKeyPath: "hidden",
             options: [.new],
-            context: &self.lastNameTextFieldHiddenContext
+            context: &self.textFieldHiddenContext
         )
     }
     
@@ -33,25 +33,25 @@ class ViewController: UIViewController {
         context: UnsafeMutableRawPointer?
     ) {
         // make sure it is our text field isHidden observer
-        if context == &self.lastNameTextFieldHiddenContext {
+        if context == &self.textFieldHiddenContext {
             // get the new value that was set
             if let newValue = change?[NSKeyValueChangeKey.newKey] as? Bool {
                 // do what needs to be done when the observer is triggered
-                self.lastNameLabel.isHidden = newValue
+                self.label.isHidden = newValue
             }
         }
     }
     
     deinit {
         // remove the observer
-        if let view = self.lastNameObservingView {
+        if let view = self.textFieldObservingView {
             view.removeObserver(self, forKeyPath: "hidden")
-            self.lastNameObservingView = nil
+            self.textFieldObservingView = nil
         }
     }
     
     @IBAction func showHideButtonAction(_ sender: Any) {
-        self.lastNameTextField.isHidden = !self.lastNameTextField.isHidden
+        self.textField.isHidden = !self.textField.isHidden
     }
 }
 

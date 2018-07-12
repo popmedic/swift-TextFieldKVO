@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     private var lastNameTextFieldHiddenContext = 0
+    private var lastNameObservingView:UIView? = nil
     @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var lastNameTextField: UITextField!
     override func viewDidLoad() {
@@ -30,6 +31,12 @@ class ViewController: UIViewController {
         if let newValue = change?[NSKeyValueChangeKey.newKey] as? Bool,
             context == &self.lastNameTextFieldHiddenContext {
             self.lastNameLabel.isHidden = newValue
+        }
+    }
+    deinit {
+        if let view = lastNameObservingView {
+            view.removeObserver(self, forKeyPath: "hidden")
+            lastNameObservingView = nil
         }
     }
     @IBAction func showHideButtonAction(_ sender: Any) {

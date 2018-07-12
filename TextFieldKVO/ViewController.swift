@@ -44,9 +44,9 @@ class ViewController: UIViewController {
     
     deinit {
         // remove the observer
-        if let view = lastNameObservingView {
+        if let view = self.lastNameObservingView {
             view.removeObserver(self, forKeyPath: "hidden")
-            lastNameObservingView = nil
+            self.lastNameObservingView = nil
         }
     }
     

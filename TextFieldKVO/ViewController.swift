@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         of object: Any?,
         change: [NSKeyValueChangeKey : Any]?,
         context: UnsafeMutableRawPointer?
-        ) {
+    ) {
         if let newValue = change?[NSKeyValueChangeKey.newKey] as? Bool,
             context == &self.lastNameTextFieldHiddenContext {
             self.lastNameLabel.isHidden = newValue
